@@ -44,6 +44,9 @@ else
         $INSTALL_CMD
     fi
 
+    # Run upgrades -- we'd normally change permissions too but that's handled later
+    $MAGENTO_CMD setup:upgrade && $MAGENTO_CMD setup:di:compile
+
     # Set up development and production types
     if [ "$RUNTYPE" == "developer" ]; then
         echo "Switching to developer mode"
@@ -61,9 +64,6 @@ else
         # Deploy static content
         $MAGENTO_CMD setup:static-content:deploy
     fi
-
-    # Run upgrades -- we'd normally change permissions too but that's handled later
-    $MAGENTO_CMD setup:upgrade && $MAGENTO_CMD setup:di:compile
 
     # Reset permissions -- it's probably better to do this when building the container
     echo "Changing permissions to www-data.. "
