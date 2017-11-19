@@ -49,13 +49,13 @@ else
         echo "Switching to developer mode"
         $MAGENTO_CMD deploy:mode:set developer -s
         sed -i "s/SetEnv MAGE_MODE.*/SetEnv MAGE_MODE \"developer\"/" /etc/apache2/conf-enabled/00_magento.conf
-        sed -i "s/opcache.enable=.*/opcache.enable=0" /usr/local/etc/php/conf.d/00_magento.ini
+        sed -i "s/opcache.enable=.*/opcache.enable=0/" /usr/local/etc/php/conf.d/00_magento.ini
         echo 'display_errors = On' >> /usr/local/etc/php/conf.d/00_production.ini
     else
         echo "Switching to production mode"
         $MAGENTO_CMD deploy:mode:set production -s
         sed -i "s/SetEnv MAGE_MODE.*/SetEnv MAGE_MODE \"production\"/" /etc/apache2/conf-enabled/00_magento.conf
-        sed -i "s/opcache.enable=.*/opcache.enable=1" /usr/local/etc/php/conf.d/00_magento.ini
+        sed -i "s/opcache.enable=.*/opcache.enable=1/" /usr/local/etc/php/conf.d/00_magento.ini
         echo 'display_errors = Off' >> /usr/local/etc/php/conf.d/00_production.ini
     fi
 
