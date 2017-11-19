@@ -1,0 +1,4 @@
+var/cache/*
+var/tmp/*
+var/session/*
+var/log/*
