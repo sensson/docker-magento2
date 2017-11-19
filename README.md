@@ -4,8 +4,8 @@
 
 A base Magento 2 image that can be used to scale in production. This can
 be used in combination with MySQL and Redis. It is opiniated and includes
-support for Composer, ionCube, Redis and the required PHP modules for a basic 
-Magento installation.
+support for Composer, ionCube, Redis, OPcache, and the required PHP modules
+for a basic Magento installation.
 
 It does not include Magento. 
 
@@ -25,7 +25,7 @@ container as that is the only way to package the entire application.
 
 The container assumes you do not store data in a folder along with the
 application. Don't use Docker volumes for scale. Use CephFS, GlusterFS or
-integrate with S3 or S3-compatible services such as Fuga.io.
+integrate with S3 or S3-compatible services such as [Fuga.io](https://fuga.io).
 
 # Configuration
 
