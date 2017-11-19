@@ -57,6 +57,9 @@ else
         sed -i "s/SetEnv MAGE_MODE.*/SetEnv MAGE_MODE \"production\"/" /etc/apache2/conf-enabled/00_magento.conf
         sed -i "s/opcache.enable=.*/opcache.enable=1/" /usr/local/etc/php/conf.d/00_magento.ini
         echo 'display_errors = Off' >> /usr/local/etc/php/conf.d/00_production.ini
+
+        # Deploy static content
+        $MAGENTO_CMD setup:static-content:deploy
     fi
 
     # Run upgrades -- we'd normally change permissions too but that's handled later
