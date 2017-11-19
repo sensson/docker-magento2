@@ -44,9 +44,6 @@ else
         $INSTALL_CMD
     fi
 
-    # Run upgrades -- we'd normally change permissions too but that's handled later
-    $MAGENTO_CMD setup:upgrade && $MAGENTO_CMD setup:di:compile
-
     # Set up development and production types
     if [ "$RUNTYPE" == "developer" ]; then
         echo "Switching to developer mode"
@@ -56,11 +53,14 @@ else
         echo 'display_errors = On' >> /usr/local/etc/php/conf.d/00_production.ini
     else
         echo "Switching to production mode"
-        $MAGENTO_CMD deploy:mode:set default
+        $MAGENTO_CMD deploy:mode:set production -s
         sed -i "s/SetEnv MAGE_MODE.*/SetEnv MAGE_MODE \"production\"/" /etc/apache2/conf-enabled/00_magento.conf
         sed -i "s/opcache.enable=.*/opcache.enable=1" /usr/local/etc/php/conf.d/00_magento.ini
         echo 'display_errors = Off' >> /usr/local/etc/php/conf.d/00_production.ini
     fi
+
+    # Run upgrades -- we'd normally change permissions too but that's handled later
+    $MAGENTO_CMD setup:upgrade && $MAGENTO_CMD setup:di:compile
 
     # Reset permissions -- it's probably better to do this when building the container
     echo "Changing permissions to www-data.. "
