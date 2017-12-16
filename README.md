@@ -19,7 +19,9 @@ COPY src/ /var/www/html/
 ```
 
 Although volumes are supported, we recommend adding your source to the
-container as that is the only way to package the entire application.
+container as that is the only way to package the entire application. This
+includes all dependencies handled by composer. If you're running CI we
+recommend to include it as one of the steps before building the container.
 
 # Persistent storage
 

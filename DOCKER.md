@@ -49,7 +49,8 @@ DOCKER
 ```
 
 This will create a Dockerfile for you that copies the content of the Magento2
-repository into the image `sensson/magento2`. 
+repository into the image `sensson/magento2`. Make sure that you run `composer
+install` before `docker build -t company/magento2-core`.
 
 Commit and push your changes.
 
@@ -89,3 +90,13 @@ It doesn't matter what versioning scheme you use to mark your Docker images,
 but it is important to pick one. 2.2.1-1 could work, where -1 would be the
 release within the 2.2.1 branch, but others could work better depending on
 your use case.
+
+# Gitlab, CI and composer
+
+At some point you need to get all dependencies with composer. We thought it
+made most sense to have our CI do this for us. In our build process we pass
+on the required credentials to download any private modules.
+
+An example .gitlab-ci.yml has been provided for those who use Gitlab for their
+repositories. It should give a pretty decent idea for Travis and Circle CI
+users too.
