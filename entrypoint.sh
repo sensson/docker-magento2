@@ -20,9 +20,6 @@ else
         sleep 2
     done
 
-    # Run composer install to get Magento up and running
-    composer install
-
     # Set all parameters -- this apparently can fail with updates?
     $MAGENTO_CMD setup:config:set --db-host="$MYSQL_HOSTNAME" --db-name="$MYSQL_DATABASE" \
                                  --db-user="$MYSQL_USERNAME" --db-password="$MYSQL_PASSWORD" \
