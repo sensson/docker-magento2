@@ -1,0 +1,63 @@
+services:
+  - docker:dind
+
+variables:
+  DOCKER_DRIVER: overlay
+  GIT_SUBMODULE_STRATEGY: recursive
+
+before_script:
+  - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+  - apk update
+  - apk add bash wget curl git
+  - apk add php7 php7-curl php7-openssl php7-json php7-phar php7-dom php7-iconv php7-mbstring php7-zlib
+  - apk add php7-ctype php7-gd php7-simplexml php7-mcrypt php7-intl php7-xsl php7-zip php7-pdo_mysql
+  - apk add php7-soap php7-xmlwriter php7-tokenizer php7-xml
+  - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
+  - 'which ssh-agent || ( apk add openssh-client )'
+  - eval $(ssh-agent -s)
+  - bash -c 'ssh-add <(echo "$SSH_PRIVATE_KEY")'
+  - mkdir -p ~/.ssh
+  - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+  - composer install
+  
+stages:
+  - build
+  - release
+
+# Build version
+build-version:
+  image: docker:latest
+  stage: build
+  variables:
+    CONTAINER: $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG
+  only:
+    - tags
+  script:
+    - docker build -t $CONTAINER .
+    - docker push $CONTAINER
+
+# Build branch
+build-branch:
+  image: docker:latest
+  stage: build
+  variables:
+    CONTAINER: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
+  except:
+    - tags
+    - master
+  script:
+    - docker build -t $CONTAINER .
+    - docker push $CONTAINER
+
+# Release when a version is set
+release-latest:
+  image: docker:latest
+  stage: release
+  variables:
+    CONTAINER: $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG
+  only:
+    - tags
+  script:
+    - docker pull $CONTAINER
+    - docker tag $CONTAINER $CI_REGISTRY_IMAGE:latest
+    - docker push $CI_REGISTRY_IMAGE:latest
