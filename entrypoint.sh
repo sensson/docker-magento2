@@ -45,7 +45,7 @@ else
     $MAGENTO_CMD setup:upgrade && $MAGENTO_CMD setup:di:compile
 
     # Set up development and production types
-    if [ "$RUNTYPE" == "developer" ]; then
+    if [ "$RUNTYPE" == "development" ]; then
         echo "Switching to developer mode"
         $MAGENTO_CMD deploy:mode:set developer -s
         sed -i "s/SetEnv MAGE_MODE.*/SetEnv MAGE_MODE \"developer\"/" /etc/apache2/conf-enabled/00_magento.conf
