@@ -5,6 +5,7 @@ LABEL maintainer="info@sensson.net"
 
 # Install Magento 2 dependencies
 RUN apt-get update && apt-get install -y \
+        cron \
         git \
         libfreetype6-dev \
         libjpeg62-turbo-dev \

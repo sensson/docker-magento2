@@ -8,6 +8,12 @@ COMMAND="$@"
 if [ -n "$COMMAND" ]; then
     echo "ENTRYPOINT: Executing override command"
     exec $COMMAND
+elif [ "$CRON" == "true" ]; then
+    echo "CRON: Starting crontab"
+
+    # Make sure all files have the correct permissions.
+    find /etc/cron* -type f -exec chmod 0644 {} \;
+    exec cron -f
 else
     MAGENTO_CMD="bin/magento"
 
@@ -24,7 +30,7 @@ else
     $MAGENTO_CMD setup:config:set --db-host="$MYSQL_HOSTNAME" --db-name="$MYSQL_DATABASE" \
                                  --db-user="$MYSQL_USERNAME" --db-password="$MYSQL_PASSWORD" \
                                  --key="$CRYPTO_KEY"
-    
+
     # Install Magento
     if [[ $(bin/magento setup:db:status) == *"not installed"*. ]] || [[ $(bin/magento setup:db:status) == *"none"*. ]]; then
         INSTALL_CMD="$MAGENTO_CMD setup:install --base-url="$URI" --admin-firstname="$ADMIN_FIRSTNAME" --admin-lastname="$ADMIN_LASTNAME" \

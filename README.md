@@ -7,7 +7,7 @@ be used in combination with MySQL and Redis. It is opiniated and includes
 support for Composer, ionCube, Redis, OPcache, and the required PHP modules
 for a basic Magento installation.
 
-It does not include Magento. 
+It does not include Magento.
 
 # Usage
 
@@ -51,9 +51,23 @@ BACKEND_FRONTNAME     | The URI of the admin panel    | admin
 CURRENCY              | Magento's default currency    | EUR
 LANGUAGE              | Magento's default language    | en_US
 TIMEZONE              | Magento's timezone            | Europe/Amsterdam
+TYPE                  | Run as a cron container       | Empty
 
 Include the port mapping in `URI` if you run your shop on a local development
 environment, e.g. `http://localhost:3000/`.
+
+### Cronjobs
+
+If you want to run cronjobs you need to `COPY` your cron file to `/etc/cron.d`.
+
+```
+FROM sensson/magento2
+COPY magento-cron /etc/cron.d/
+COPY src/ /var/www/html/
+```
+
+Starting the container with the environment variable `CRON=true` will launch
+the cron daemon instead of Apache.
 
 ## Development mode
 
