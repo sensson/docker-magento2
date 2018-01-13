@@ -12,7 +12,7 @@ services:
     ports:
       - "8000:80"
     environment:
-      - RUNTYPE=developer
+      - RUNTYPE=development
       - MYSQL_HOSTNAME=
       - MYSQL_USERNAME=
       - MYSQL_PASSWORD=
