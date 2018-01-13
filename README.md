@@ -51,7 +51,7 @@ BACKEND_FRONTNAME     | The URI of the admin panel    | admin
 CURRENCY              | Magento's default currency    | EUR
 LANGUAGE              | Magento's default language    | en_US
 TIMEZONE              | Magento's timezone            | Europe/Amsterdam
-TYPE                  | Run as a cron container       | Empty
+CRON                  | Run as a cron container       | Empty
 
 Include the port mapping in `URI` if you run your shop on a local development
 environment, e.g. `http://localhost:3000/`.
