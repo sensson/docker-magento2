@@ -27,6 +27,7 @@ else
 
     # Install Magento
     if [[ $(bin/magento setup:db:status) == *"not installed"*. ]] || [[ $(bin/magento setup:db:status) == *"none"*. ]]; then
+        echo "Running installer.."
         INSTALL_CMD="$MAGENTO_CMD setup:install --base-url="$URI" --admin-firstname="$ADMIN_FIRSTNAME" --admin-lastname="$ADMIN_LASTNAME" \
                                   --admin-email="$ADMIN_EMAIL" --admin-user="$ADMIN_USERNAME" \
                                   --admin-password="$ADMIN_PASSWORD" --language="$LANGUAGE" --currency="$CURRENCY" \
