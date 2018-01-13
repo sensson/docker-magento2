@@ -8,12 +8,6 @@ COMMAND="$@"
 if [ -n "$COMMAND" ]; then
     echo "ENTRYPOINT: Executing override command"
     exec $COMMAND
-elif [ "$CRON" == "true" ]; then
-    echo "CRON: Starting crontab"
-
-    # Make sure all files have the correct permissions.
-    find /etc/cron* -type f -exec chmod 0644 {} \;
-    exec cron -f
 else
     MAGENTO_CMD="bin/magento"
 
@@ -72,6 +66,14 @@ else
     echo "Changing permissions to www-data.. "
     chown -R www-data: /var/www/html
 
-    # Start Apache
-    exec /usr/local/bin/apache2-foreground
+    if [ "$CRON" == "true" ]; then
+        echo "CRON: Starting crontab"
+
+        # Make sure all files have the correct permissions.
+        find /etc/cron* -type f -exec chmod 0644 {} \;
+        exec cron -f
+    else
+        # Start Apache
+        exec /usr/local/bin/apache2-foreground
+    fi
 fi
