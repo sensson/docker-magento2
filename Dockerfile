@@ -48,6 +48,7 @@ RUN cd /tmp \
     && echo "zend_extension=ioncube_loader_lin_7.0.so" > /usr/local/etc/php/conf.d/00_docker-php-ext-ioncube_loader_lin_7.0.ini
 
 # Set up the application
+COPY src /var/www/html/
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 COPY etc/php.ini /usr/local/etc/php/conf.d/00_magento.ini
 COPY etc/apache.conf /etc/apache2/conf-enabled/00_magento.conf
