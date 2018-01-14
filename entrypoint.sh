@@ -21,9 +21,17 @@ else
     done
 
     # Set all parameters -- this apparently can fail with updates?
-    $MAGENTO_CMD setup:config:set --db-host="$MYSQL_HOSTNAME" --db-name="$MYSQL_DATABASE" \
+    CONFIG_CMD="$MAGENTO_CMD setup:config:set --db-host="$MYSQL_HOSTNAME" --db-name="$MYSQL_DATABASE" \
                                  --db-user="$MYSQL_USERNAME" --db-password="$MYSQL_PASSWORD" \
-                                 --key="$CRYPTO_KEY"
+                                 --key="$CRYPTO_KEY""
+
+    # Set up the backend frontname -- it's recommended to not use 'backend' or 'admin' here
+    if [[ -n "$BACKEND_FRONTNAME" ]]; then
+        CONFIG_CMD="$CONFIG_CMD --backend-frontname=$BACKEND_FRONTNAME"
+    fi
+
+    # Run configuration command
+    $CONFIG_CMD
 
     # Install Magento
     echo "Installation output"
@@ -34,11 +42,6 @@ else
                                   --admin-email="$ADMIN_EMAIL" --admin-user="$ADMIN_USERNAME" \
                                   --admin-password="$ADMIN_PASSWORD" --language="$LANGUAGE" --currency="$CURRENCY" \
                                   --timezone="$TIMEZONE" --use-rewrites=1"
-
-        # Set up the backend frontname -- it's recommended to not use 'backend' or 'admin' here
-        if [[ -n "$BACKEND_FRONTNAME" ]]; then
-            INSTALL_CMD="$INSTALL_CMD --backend-frontname=$BACKEND_FRONTNAME"
-        fi
 
         # Run the install command
         $INSTALL_CMD
