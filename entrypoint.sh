@@ -26,6 +26,8 @@ else
                                  --key="$CRYPTO_KEY"
 
     # Install Magento
+    echo "Installation output"
+    echo $(bin/magento setup:db:status)
     if [[ $(bin/magento setup:db:status) == *"not installed"*. ]] || [[ $(bin/magento setup:db:status) == *"none"*. ]]; then
         echo "Running installer.."
         INSTALL_CMD="$MAGENTO_CMD setup:install --base-url="$URI" --admin-firstname="$ADMIN_FIRSTNAME" --admin-lastname="$ADMIN_LASTNAME" \
