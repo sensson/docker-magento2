@@ -51,10 +51,14 @@ BACKEND_FRONTNAME     | The URI of the admin panel    | admin
 CURRENCY              | Magento's default currency    | EUR
 LANGUAGE              | Magento's default language    | en_US
 TIMEZONE              | Magento's timezone            | Europe/Amsterdam
-CRON                  | Run as a cron container       | Empty
+CRON                  | Run as a cron container       | false
+UNATTENDED            | Run unintended upgrades       | false
 
 Include the port mapping in `URI` if you run your shop on a local development
 environment, e.g. `http://localhost:3000/`.
+
+If you set `UNATTENDED` to true the container will install Magento and it will
+try to run updates based on the output of `setup:db:status`.
 
 ### Cronjobs
 
