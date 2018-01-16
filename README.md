@@ -52,7 +52,7 @@ CURRENCY              | Magento's default currency    | EUR
 LANGUAGE              | Magento's default language    | en_US
 TIMEZONE              | Magento's timezone            | Europe/Amsterdam
 CRON                  | Run as a cron container       | false
-UNATTENDED            | Run unintended upgrades       | false
+UNATTENDED            | Run unattended upgrades       | false
 
 Include the port mapping in `URI` if you run your shop on a local development
 environment, e.g. `http://localhost:3000/`.
