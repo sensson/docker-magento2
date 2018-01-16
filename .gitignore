@@ -2,4 +2,4 @@
 src/*
 !src/.gitkeep
 test/
-docker-compose.yml
+mysql/

@@ -13,24 +13,25 @@ services:
       - "8000:80"
     environment:
       - RUNTYPE=development
-      - MYSQL_HOSTNAME=
-      - MYSQL_USERNAME=
-      - MYSQL_PASSWORD=
-      - MYSQL_DATABASE=
-      - CRYPTO_KEY=
-      - URI=
-      - BACKEND_FRONTNAME=
-    volumes:
-      - ./magento2.2:/var/www/html/
+      - MYSQL_HOSTNAME=mysql
+      - MYSQL_USERNAME=root
+      - MYSQL_PASSWORD=password
+      - MYSQL_DATABASE=magento
+      - CRYPTO_KEY=secured
+      - URI=http://localhost:8000
+      - BACKEND_FRONTNAME=admin
+      - UNATTENDED=true
     networks:
       - backend
 
   mysql:
     image: mysql:latest
     restart: always
+    volumes:
+      - ./mysql:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=
-      - MYSQL_DATABASE=
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=magento
     networks:
       - backend
 
