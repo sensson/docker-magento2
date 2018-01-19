@@ -65,7 +65,8 @@ else
     if [[ $CHECK_STATUS == *"up to date"*. ]]; then
       echo "Installation is up to date"
     else
-      CHECK_PLUGINS=$(echo $CHECK_STATUS | grep -o '\<none\>' || true | wc -l)
+      CHECK_PLUGINS=$((echo $CHECK_STATUS | grep -o '\<none\>' || true) | \
+                      wc -l)
 
       if [[ "${CHECK_PLUGINS}" -eq "0" ]]; then
         UNINSTALLED_PLUGINS=0
