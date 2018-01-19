@@ -73,7 +73,7 @@ else
         echo "Update required."
       else
         UNINSTALLED_PLUGINS=$(expr $CHECK_PLUGINS / 2)
-        echo "Found ${UNINSTALLED_PLUGINS} uninstalled plugins."
+        echo "Found ${UNINSTALLED_PLUGINS} uninstalled plugin(s)."
       fi
 
       # This is an arbitrary number. As we're checking on 'none' as an
