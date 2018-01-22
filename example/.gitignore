@@ -1,0 +1,8 @@
+.DS_Store
+src/*
+!src/.gitkeep
+!src/cron
+!src/composer.json
+!src/app/etc/env.php
+!src/app/etc/config.php
+mysql
