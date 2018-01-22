@@ -1,0 +1,1 @@
+* * * * * root /usr/local/bin/php /var/www/html/bin/magento cron:run > /proc/1/fd/1 2> /proc/1/fd/2
