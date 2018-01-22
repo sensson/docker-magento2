@@ -1,0 +1,75 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql
+    container_name: mysql
+    restart: always
+    volumes:
+      - ./mysql:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=bS3vF3TQLXphcGxk
+      - MYSQL_DATABASE=magento
+    networks:
+      - backend
+
+  frontend:
+    # build has been left out on purpose. The steps to build a container
+    # are not covered in the Dockerfile, they have been left out on purpose
+    # so all preparation is done in an intermediate environment that has
+    # all requirements. See .gitlab-ci.yml.
+    build: .
+    image: magento2:latest
+    container_name: magento-frontend
+    links:
+      - mysql:mysql
+    restart: always
+    environment:
+      - MYSQL_HOSTNAME=mysql
+      - MYSQL_USERNAME=root
+      - MYSQL_PASSWORD=bS3vF3TQLXphcGxk
+      - MYSQL_DATABASE=magento
+      - CRYPTO_KEY=SxKT2RyykbmbhDmh
+      - URI=http://localhost:8080
+      - RUNTYPE=development
+      - ADMIN_USERNAME=admin
+      - ADMIN_PASSWORD=adm1nistr4tor
+      - ADMIN_FIRSTNAME=Your
+      - ADMIN_LASTNAME=Name
+      - ADMIN_EMAIL=you@yourwebsite.com
+      - UNATTENDED=true
+    ports:
+      - 8080:80
+    networks:
+      - backend
+
+  cron:
+    # There is no need to build an image twice. We can reuse the image that
+    # was build as a frontend
+    image: magento2:latest
+    container_name: magento-cron
+    depends_on:
+      - frontend
+    links:
+      - mysql:mysql
+    restart: always
+    environment:
+      - MYSQL_HOSTNAME=mysql
+      - MYSQL_USERNAME=root
+      - MYSQL_PASSWORD=bS3vF3TQLXphcGxk
+      - MYSQL_DATABASE=magento
+      - CRYPTO_KEY=SxKT2RyykbmbhDmh
+      - URI=http://localhost:8080
+      - RUNTYPE=development
+      - ADMIN_USERNAME=admin
+      - ADMIN_PASSWORD=adm1nistr4tor
+      - ADMIN_FIRSTNAME=Your
+      - ADMIN_LASTNAME=Name
+      - ADMIN_EMAIL=you@yourwebsite.com
+      - CRON=true
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge
