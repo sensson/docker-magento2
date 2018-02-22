@@ -54,6 +54,19 @@ UNATTENDED            | Run unattended upgrades       | false
 Include the port mapping in `URI` if you run your shop on a local development
 environment, e.g. `http://localhost:3000/`.
 
+## Hooks
+
+Hooks allow you to run certain actions at certain points in the startup
+procedure without having to rewrite `entrypoint.sh`. You can use hooks to
+import data, preconfigure settings or run other scripts that need to run
+each startup sequence.
+
+Hook point    | Location               | Description
+----------    | ---------              | -----------
+Post install  | /hooks/post_install.sh | Runs after Magento has been installed.
+
+You need to `COPY` any hooks to this location yourself.
+
 ## Development mode
 
 Setting `RUNTYPE` to `development` will turn on public error reports. Anything
