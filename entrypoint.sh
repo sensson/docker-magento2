@@ -135,6 +135,15 @@ else
   RUNTIME=$((END-START))
   echo "Startup preparation finished in ${RUNTIME} seconds"
 
+  # Run any post install hooks (e.g. run a database script). You can't interact
+  # with the Magento API at this point as you need a running webserver.
+  POST_INSTALL_HOOK="/hooks/post_install.sh"
+  if [ -f "${POST_INSTALL_HOOK}" ]; then
+    echo "HOOKS: Running POST_INSTALL_HOOK"
+    chmod +x "${POST_INSTALL_HOOK}"
+    $POST_INSTALL_HOOK
+  fi
+
   # If CRON is set to true we only start cron in this container. We needed to
   # go through the same process as Apache to match all requirements.
   if [ "${CRON}" == "true" ]; then

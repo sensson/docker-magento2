@@ -53,6 +53,9 @@ COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 COPY etc/php.ini /usr/local/etc/php/conf.d/00_magento.ini
 COPY etc/apache.conf /etc/apache2/conf-enabled/00_magento.conf
 
+# Copy hooks
+COPY hooks /hooks/
+
 # Set default parameters
 ENV MYSQL_HOSTNAME="mysql" MYSQL_USERNAME="root" MYSQL_PASSWORD="secure" MYSQL_DATABASE="magento" CRYPT_KEY="" \
     URI="http://localhost" ADMIN_USERNAME="admin" ADMIN_PASSWORD="adm1nistrator" ADMIN_FIRSTNAME="admin" \
