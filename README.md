@@ -63,6 +63,8 @@ each startup sequence.
 
 Hook point    | Location               | Description
 ----------    | ---------              | -----------
+Pre install   | /hooks/pre_install.sh  | Runs before an installation or update.
+Pre compile   | /hooks/pre_compile.sh  | Runs before code compilation starts.
 Post install  | /hooks/post_install.sh | Runs after Magento has been installed.
 
 You need to `COPY` any hooks to this location yourself.
