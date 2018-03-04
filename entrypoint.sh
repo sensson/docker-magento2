@@ -13,6 +13,11 @@
 set -eo pipefail
 COMMAND="$@"
 
+# Set hooks
+PRE_INSTALL_HOOK="/hooks/pre_install.sh"
+PRE_COMPILE_HOOK="/hooks/pre_compile.sh"
+POST_INSTALL_HOOK="/hooks/post_install.sh"
+
 # Override the default command
 if [ -n "${COMMAND}" ]; then
   echo "ENTRYPOINT: Executing override command"
@@ -54,6 +59,13 @@ else
   # Run configuration command
   $CMD_CONFIG
 
+  # Run any commands that need to run before code compilation starts
+  if [ -f "${PRE_INSTALL_HOOK}" ]; then
+    echo "HOOKS: Running PRE_INSTALL_HOOK"
+    chmod +x "${PRE_INSTALL_HOOK}"
+    $PRE_INSTALL_HOOK
+  fi
+
   # Run setup:db:status to get an idea about the current state
   CHECK_STATUS=$($CMD_MAGENTO setup:db:status 2>&1 || true)
 
@@ -87,6 +99,13 @@ else
         $CMD_MAGENTO setup:upgrade
       fi
     fi
+  fi
+
+  # Run any commands that need to run before code compilation starts
+  if [ -f "${PRE_COMPILE_HOOK}" ]; then
+    echo "HOOKS: Running PRE_COMPILE_HOOK"
+    chmod +x "${PRE_COMPILE_HOOK}"
+    $PRE_COMPILE_HOOK
   fi
 
   # Run code compilation
@@ -137,7 +156,6 @@ else
 
   # Run any post install hooks (e.g. run a database script). You can't interact
   # with the Magento API at this point as you need a running webserver.
-  POST_INSTALL_HOOK="/hooks/post_install.sh"
   if [ -f "${POST_INSTALL_HOOK}" ]; then
     echo "HOOKS: Running POST_INSTALL_HOOK"
     chmod +x "${POST_INSTALL_HOOK}"
