@@ -143,7 +143,7 @@ else
     echo 'display_errors = Off' >> /usr/local/etc/php/conf.d/00_production.ini
 
     # Deploy static content
-    $CMD_MAGENTO setup:static-content:deploy
+    $CMD_MAGENTO setup:static-content:deploy $LANGUAGE
   fi
 
   echo "Changing permissions to www-data.. "
