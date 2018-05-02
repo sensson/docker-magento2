@@ -47,6 +47,7 @@ ADMIN_EMAIL           | Administrator email address   | admin@localhost.com
 BACKEND_FRONTNAME     | The URI of the admin panel    | admin
 CURRENCY              | Magento's default currency    | EUR
 LANGUAGE              | Magento's default language    | en_US
+CONTENT_LANGUAGES     | The languages used in Magento | en_US
 TIMEZONE              | Magento's timezone            | Europe/Amsterdam
 CRON                  | Run as a cron container       | false
 UNATTENDED            | Run unattended upgrades       | false
@@ -61,11 +62,11 @@ procedure without having to rewrite `entrypoint.sh`. You can use hooks to
 import data, preconfigure settings or run other scripts that need to run
 each startup sequence.
 
-Hook point    | Location               | Description
-----------    | ---------              | -----------
-Pre install   | /hooks/pre_install.sh  | Runs before an installation or update.
-Pre compile   | /hooks/pre_compile.sh  | Runs before code compilation starts.
-Post install  | /hooks/post_install.sh | Runs after Magento has been installed.
+Hook point   | Location                 | Description
+----------   | ---------                | -----------
+Pre install  | `/hooks/pre_install.sh`  | Runs before an installation or update.
+Pre compile  | `/hooks/pre_compile.sh`  | Runs before code compilation starts.
+Post install | `/hooks/post_install.sh` | Runs after Magento has been installed.
 
 You need to `COPY` any hooks to this location yourself.
 
