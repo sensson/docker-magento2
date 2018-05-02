@@ -60,6 +60,6 @@ COPY hooks /hooks/
 ENV MYSQL_HOSTNAME="mysql" MYSQL_USERNAME="root" MYSQL_PASSWORD="secure" MYSQL_DATABASE="magento" CRYPT_KEY="" \
     URI="http://localhost" ADMIN_USERNAME="admin" ADMIN_PASSWORD="adm1nistrator" ADMIN_FIRSTNAME="admin" \
     ADMIN_LASTNAME="admin" ADMIN_EMAIL="admin@localhost.com" CURRENCY="EUR" LANGUAGE="en_US" \
-    TIMEZONE="Europe/Amsterdam" BACKEND_FRONTNAME="admin"
+    TIMEZONE="Europe/Amsterdam" BACKEND_FRONTNAME="admin" CONTENT_LANGUAGES="en_US"
 
 ENTRYPOINT [ "/usr/local/bin/entrypoint.sh" ]
