@@ -66,7 +66,7 @@ before_script:
   - apk add php7 php7-curl php7-openssl php7-json php7-phar php7-dom php7-iconv
   - apk add php7-mbstring php7-zlib php7-ctype php7-gd php7-simplexml
   - apk add php7-mcrypt php7-intl php7-xsl php7-zip php7-pdo_mysql php7-soap
-  - apk add php7-xmlwriter php7-tokenizer php7-xml
+  - apk add php7-xmlwriter php7-tokenizer php7-xml php7-bcmath
   - pip install docker-compose
   - curl -sS https://getcomposer.org/installer | php --
     --install-dir=/usr/bin --filename=composer
