@@ -25,7 +25,7 @@ services:
       - backend
 
   mysql:
-    image: mysql:latest
+    image: mysql:5
     restart: always
     volumes:
       - ./mysql:/var/lib/mysql
