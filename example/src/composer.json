@@ -63,5 +63,8 @@
     ],
     "extra": {
         "magento-force": "override"
+    },
+    "replace": {
+        "temando/module-shipping-m2": "*"
     }
 }
