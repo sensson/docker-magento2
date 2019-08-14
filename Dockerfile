@@ -1,4 +1,4 @@
-# Base image is PHP 5.6 running Apache
+# Base image is PHP 7.2 running Apache
 
 # FIX We want to build magento with PHP 7.2
 FROM php:7.2-apache
