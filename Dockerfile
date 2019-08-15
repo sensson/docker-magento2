@@ -1,27 +1,43 @@
-# Base image is PHP 5.6 running Apache
-FROM php:7.0.23-apache
+# Base image is PHP 7.2 running Apache
+
+# FIX We want to build magento with PHP 7.2
+FROM php:7.2-apache
+
 LABEL company="Sensson"
 LABEL maintainer="info@sensson.net"
 
+# FIX We have to fix Mcrypt
+# FIX https://stackoverflow.com/questions/47671108/docker-php-ext-install-mcrypt-missing-folder
+RUN apt-get update && apt-get install -y libmcrypt-dev \
+    && pecl install mcrypt-1.0.2 \
+    && docker-php-ext-enable mcrypt
+
 # Install Magento 2 dependencies
+# FIX We have to change two package names
+#     - libpng12-dev -> libpng-dev
+#     - mysql-client -> default-mysql-client
 RUN apt-get update && apt-get install -y \
         cron \
         git \
         libfreetype6-dev \
         libjpeg62-turbo-dev \
         libmcrypt-dev \
-        libpng12-dev \
+        # FIX COMMENTED # libpng-dev \
+        libpng-dev \
         libxml2-dev \
         libxslt1-dev \
         libicu-dev \
-        mysql-client \
+        # FIX COMMENTED # mysql-client \
+        default-mysql-client \
         xmlstarlet \
     && docker-php-ext-install -j$(nproc) bcmath \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install -j$(nproc) gd \
     && docker-php-ext-install -j$(nproc) json \
     && docker-php-ext-install -j$(nproc) iconv \
-    && docker-php-ext-install -j$(nproc) mcrypt \
+    # FIX doker-php-ext can't install mcrypt since mcrypt has been pushed off the native extensions
+    # FIX we managed this line 9
+    # FIX COMMENTED # && docker-php-ext-install -j$(nproc) mcrypt \
     && docker-php-ext-install -j$(nproc) mbstring \
     && docker-php-ext-install -j$(nproc) pcntl \
     && docker-php-ext-install -j$(nproc) soap \
@@ -30,7 +46,7 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install -j$(nproc) intl \
     && docker-php-ext-install -j$(nproc) pdo \
     && docker-php-ext-install -j$(nproc) pdo_mysql \
-    && pecl install redis-3.1.0 \
+    && pecl install redis-5.0.2 \
     && docker-php-ext-enable redis \
     && a2enmod rewrite headers \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
