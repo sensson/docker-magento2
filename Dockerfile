@@ -59,10 +59,10 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 # Install ioncube
 RUN cd /tmp \
     && curl -o ioncube.tar.gz http://downloads3.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz \
-    && tar -xvvzf ioncube.tar.gz \
-    && mv ioncube/ioncube_loader_lin_7.0.so /usr/local/lib/php/extensions/* \
+    && tar -xvzf ioncube.tar.gz \
+    && mv ioncube/ioncube_loader_lin_7.2.so /usr/local/lib/php/extensions/* \
     && rm -Rf ioncube.tar.gz ioncube \
-    && echo "zend_extension=ioncube_loader_lin_7.0.so" > /usr/local/etc/php/conf.d/00_docker-php-ext-ioncube_loader_lin_7.0.ini
+    && echo "zend_extension=ioncube_loader_lin_7.2.so" > /usr/local/etc/php/conf.d/00_docker-php-ext-ioncube_loader_lin_7.2.ini
 
 # Set up the application
 COPY src /var/www/html/
