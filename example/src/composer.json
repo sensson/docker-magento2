@@ -2,18 +2,18 @@
     "name": "magento/project-community-edition",
     "description": "eCommerce Platform for Growth (Community Edition)",
     "type": "project",
-    "version": "2.2.7",
+    "version": "2.2.10",
     "license": [
         "OSL-3.0",
         "AFL-3.0"
     ],
     "config": {
       "platform": {
-        "php": "7.0.23"
+        "php": "7.2.22"
       }
     },
     "require": {
-        "magento/product-community-edition": "2.2.7",
+        "magento/product-community-edition": "2.2.10",
         "composer/composer": "@alpha"
     },
     "require-dev": {
