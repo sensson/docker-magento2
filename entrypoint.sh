@@ -76,6 +76,9 @@ else
   if [ "${UNATTENDED}" == "true" ]; then
     if [[ $CHECK_STATUS == *"up to date"*. ]]; then
       echo "Installation is up to date"
+    elif [[ $CHECK_STATUS == *"Magento application is not installed"*. ]]; then
+      echo "Running installer.."
+      $CMD_INSTALL
     else
       CHECK_PLUGINS=$((echo $CHECK_STATUS | grep -o '\<none\>' || true) | \
                       wc -l)
