@@ -38,7 +38,7 @@ else
   # Set the config command
   CMD_CONFIG="${CMD_MAGENTO} setup:config:set --db-host="${MYSQL_HOSTNAME}" \
               --db-name="${MYSQL_DATABASE}" --db-user="${MYSQL_USERNAME}" \
-              --db-password="${MYSQL_PASSWORD}" --key="${CRYPTO_KEY}""
+              --db-password="${MYSQL_PASSWORD}" --key="${CRYPTO_KEY}" --no-interaction"
 
   # Set up the backend frontname -- it's recommended to not use 'backend' or
   # 'admin' here
